@@ -28,11 +28,9 @@
         margin: 0;
         padding: 1rem;
         box-sizing: content-box;
-        background: #353535;
-        background-size: 40px 40px;
-        background-image:
-            linear-gradient(to right, #50505090 1px, transparent 1px),
-            linear-gradient(to bottom, #50505090 1px, transparent 1px);
+    }
+    *{
+        user-select: none;
     }
     #cardShadow {
         height: 3in;
@@ -87,6 +85,8 @@
             5px 5px 10px #ffffff10 inset;
     }
     #card {
+        --blur: 0rem;
+        filter: blur(var(--blur));
         z-index: 99;
         height: 3in;
         aspect-ratio: 8 / 5;
@@ -243,119 +243,51 @@
                 font-size: 3.675rem;
                 letter-spacing: .15rem;
                 font-family: "Libre Barcode 39", system-ui;
-                &.previewMode{filter: blur(.25rem);}
+                /* &.previewMode{filter: blur(.25rem);} */
                 /* background-image: url("https://barcode.tec-it.com/barcode.ashx?data=2802007&code=Code39"); */
             }
         }
     }
+    #cardback {
+        --blur: 1rem;
+        filter: blur(var(--blur));
+        z-index: 89;
+        height: 3in;
+        aspect-ratio: 8 / 5;
+        background: #f0f0f0;
+        /* background: url("https://m.media-amazon.com/images/I/81sY38OLrIL._AC_UF894,1000_QL80_.jpg"); */
+        border-radius: .5rem;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        box-sizing: border-box;
+        /* gap: .25rem; */
+        margin: 0;
+        padding: 0;
+        border: 1px solid #45454590;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(.75) translateY(75px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        /* overflow: hidden; */
+    }
     .disabled {
         pointer-events: none;
     }
-    /*@media(orientation:portrait){
-        #card,#cardShadow {
-            top: 2rem !important;
-            translate: -50% 0;
-        }
-        #editCard {
-            position: fixed;
-            box-sizing: border-box;
-            bottom: calc(-100dvh + 3in);
-            left: 50%;
-            translate: -50% 0%;
-            height: calc(100dvh - 3in - 2rem);
-            width: 100dvw;
-            background: #15151590;
-            backdrop-filter: blur(.5rem);
-            border-top: 1px solid #45454590;
-            padding: 1.15rem 5rem;
-            font-family: "Poppins", sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            button {
-                visibility: hidden;
-                height: 0%;
-                margin: 0;
-                padding: 0;
-                position: absolute;
-                bottom: 0%;
-                right: 0%;
-                &::after {
-                    content: "🖫";
-                    visibility: visible;
-                    display: flex !important;
-                    justify-content: center;
-                    align-items: center;
-                    box-sizing: border-box;
-                    width: 3rem;
-                    aspect-ratio: 1 / 1;
-                    cursor: pointer;
-                    position: absolute;
-                    bottom: 1.5rem;
-                    right: 1.15rem;
-                    padding-top: .5rem;
-                    border-radius: calc((.5rem * 3) / 4);
-                    font-size: 1.5rem;
-                    color: #151515;
-                    font-weight: normal;
-                    font-family: "Poppins", sans-serif;
-                    border: 1px solid #45454590;
-                    background: #fff;
-                }
-            }
-            h1 {
-                font-size: 2.5rem;
-                color: #fff;
-                font-weight: bold;
-                margin: 0;
-                line-height: 2.5rem;
-                width: 100%;
-            }
-            input, label {
-                margin: .5rem 0;
-                padding: 4px .675rem;
-                box-sizing: border-box;
-                border-radius: calc((.5rem * 3) / 4);
-                height: 2.5rem;
-                border: 1px solid #45454590;
-                background: transparent;
-                color: #fff;
-                font-size: 1rem;
-                width: 100%;
-                outline: none;
-                transition: .35s;
-                &::placeholder {color: #454545;}
-                &:focus {
-                    background: #fff;
-                    border-color: transparent;
-                    color: #151515;
-                }
-                &.fileUpload {
-                    text-align: center;
-                    vertical-align: middle;
-                    background: #fff;
-                    color: #151515;
-                    font-size: .875rem;
-                    line-height: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    cursor: pointer;
-                }
-            }
-            input[type="file"] {
-                display: none;
-            }
-        }
-        #info{
-            display: none;
-            visibility: hidden;
-            pointer-events: none;
-        }
-    }*/
+    .hidden {
+        display: none;
+        visibility: hidden;
+        pointer-events: none;
+    }
     @media(orientation:landscape){
         #editCard {
+            --blur: 0rem;
+            filter: blur(var(--blur));
             position: absolute;
             box-sizing: border-box;
             top: 50%;
@@ -504,6 +436,8 @@
             }
         }
         #advancedEdit {
+            --blur: 1rem;
+            filter: blur(var(--blur));
             position: absolute;
             box-sizing: border-box;
             top: 50%;
@@ -633,18 +567,268 @@
                 display: none;
             }
         }
+        #switchSides {
+            width: 20rem;
+            height: 2.5rem;
+            cursor: pointer;
+            position: fixed;
+            bottom: 4px;
+            left: 50%;
+            translate: -50% -50%;
+            border-radius: calc((.5rem * 3) / 4);
+            font-size: .875rem;
+            color: #151515;
+            font-weight: normal;
+            font-family: "Poppins", sans-serif;
+            border: 1px solid #45454590;
+            /* background: #ffffffb0; */
+            /* backdrop-filter: blur(.5rem); */
+            transition: .35s;
+            z-index: 559;
+            &:hover {
+                scale: 1.05;
+                /* background: #ffffff; */
+            }
+        }
+        #currentlyEditing {
+            position: fixed;
+            width: 20rem;
+            height: 3rem;
+            line-height: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            top: 3.5rem;
+            left: 50%;
+            translate: -50% 0;
+            font-size: 4rem;
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            font-weight: bold;
+            text-align: center;
+            z-index: 99;
+            text-transform: capitalize;
+            &::before {
+                width: 100%;
+                height: 100%;
+                content: "Currently Editing";
+                text-transform: uppercase;
+                position: absolute;
+                top: -1rem;
+                left: 50%;
+                translate: -50% 0;
+                font-size: 1rem;
+                color: #e0e0e0;
+                font-family: "Poppins", sans-serif;
+                font-weight: 500;
+            }
+        }
+        #editCardBack {
+            position: absolute;
+            box-sizing: border-box;
+            top: 50%;
+            left: calc(100% + 1rem);
+            z-index: 200;
+            translate: 0 -50%;
+            /* height: 125%; */
+            height: fit-content;
+            width: 20rem;
+            border-radius: .5rem;
+            background: #15151590;
+            backdrop-filter: blur(.5rem);
+            border: 1px solid #45454590;
+            padding: 1.15rem 1rem;
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: .5rem;
+            box-shadow: 0 0 1rem #151515;
+            button {
+                /* width: calc(100% - 8px); */
+                width: 100%;
+                height: 2.5rem;
+                cursor: pointer;
+                /* position: absolute; */
+                /* bottom: 4px; */
+                /* left: 50%; */
+                /* translate: -50% 0; */
+                border-radius: calc((.5rem * 3) / 4);
+                font-size: .875rem;
+                color: #151515;
+                font-weight: normal;
+                font-family: "Poppins", sans-serif;
+                border: 1px solid #45454590;
+                background: #fff;
+                transition: .35s;
+                &:hover {
+                    scale: 1.05;
+                }
+            }
+            h1 {
+                font-size: 2.25rem;
+                color: #fff;
+                font-weight: bold;
+                margin: 0;
+                line-height: 2.5rem;
+                width: 100%;
+            }
+            .spacer {
+                display: inline-block;
+                width: 100%;
+                height: .25rem;
+                margin: 0;
+                padding: 0;
+            }
+            input, label {
+                padding: 4px .675rem;
+                box-sizing: border-box;
+                border-radius: calc((.5rem * 3) / 4);
+                height: 2.5rem;
+                border: 1px solid #45454590;
+                background: transparent;
+                /* color: #454545; */
+                color: #fff;
+                font-size: 1rem;
+                width: 100%;
+                outline: none;
+                transition: .35s;
+                &:hover {
+                    scale: 1.05;
+                }
+                &::placeholder {color: #454545;}
+                &:focus {
+                    background: #fff;
+                    border-color: transparent;
+                    color: #151515;
+                }
+                &.fileUpload {
+                    text-align: center;
+                    vertical-align: middle;
+                    background: #fff;
+                    color: #151515;
+                    font-size: .875rem;
+                    line-height: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                }
+            }
+            input[type="file"] {
+                display: none;
+            }
+        }
+        #customSchedule {
+            --blur: 0rem;
+            filter: blur(var(--blur));
+            border-collapse: collapse;
+            width: 3in;
+            /* opacity: 0; */
+            /* display: none; */
+            /* display: none; */
+            td,tr,&{
+                border: 1px solid black;
+                text-align: center;
+                font-family: "Poppins", sans-serif;
+                font-size: .675rem;
+                font-weight: 400;
+                line-height: 0;
+            }
+            td {
+                /* display: flex;
+                justify-content: center;
+                align-items: center; */
+                height: .175in;
+                text-align: center;
+                vertical-align: middle;
+                padding: .025in;
+            }
+            .tc {
+                width: 1.5in;
+            }
+        }
+        #scheduleTable {
+            --blur: 0rem;
+            filter: blur(var(--blur));
+            border-collapse: collapse;
+            td,tr,&{
+                border: 1px solid black;
+                text-align: center;
+                font-family: "Poppins", sans-serif;
+                font-size: .675rem;
+                font-weight: 400;
+                line-height: 0;
+            }
+            td {
+                /* display: flex;
+                justify-content: center;
+                align-items: center; */
+                height: .175in;
+                text-align: center;
+                vertical-align: middle;
+                padding: .025in;
+            }
+            strong {
+                text-transform: uppercase;
+                font-weight: 500;
+                border: none !important;
+            }
+            .tc {
+                width: .375in;
+            }
+            width: 3.5in;
+        }
+        span {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-size: .875rem;
+            &.margintop {
+                margin-top: .25rem;
+            }
+        }
+        select {
+            background: transparent;
+            color: #e0e0e0;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-size: .875rem;
+            padding: .5rem;
+            height: 2.5rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: calc((3 * .5rem) / 4);
+            border: 1px solid #45454590;
+            appearance: none;
+            /* background-image: url('https://www.svgrepo.com/show/80156/down-arrow.svg'); */
+            /* background-repeat: no-repeat; */
+            /* background-size: .75rem .75rem; */
+            /* background-position: calc(100% - .5rem); */
+            outline: none;
+            transition: .35s;
+            &:hover,&:focus{
+                background: #fff;
+                color: #151515;
+            }
+        }
     }
 </style>
 <body>
     <div id="info">
-        <h1>IDGen<br><span>V2.7.3</span></h1><hr>
+        <h1>IDGen<br><span>V2.8.1</span></h1><hr>
         <p>To use, simply input your name, ID Number, Graduation year, and possibly an id photo, and it will be generated.<br><br>
         To print, click the "Export to PNG" button, and put that on a google doc <strong>WITHOUT RESIZING</strong>. The ID is made using the actual dimensions of an ID, and resizing it will make the size innacurate.<br><br>
-        In order to unblur the barcode and hide the "Preview," please click the export button. The export will be higher quality and remvoe any artifacts, extrams (liek the background), and result in a superior result overall.</p>
+        <!-- In order to unblur the barcode and hide the "Preview," please click the export button. The export will be higher quality and remvoe any artifacts, extrams (liek the background), and result in a superior result overall.</p> -->
     </div>
-    <div id="cardShadow">
-        <h1 id="preview">PREVIEW<!--<span>EXPORT DONT SCREENSHOT</span>--></h1>
-    </div>
+    <h1 id="currentlyEditing">Front</h1>
+    <button id="switchSides">Switch Sides</button>
+    <div id="cardShadow"></div>
     <div id="card">
         <div id="editCard">
             <h1>Edit Card</h1>
@@ -681,13 +865,13 @@
             <p class="colorprop">
                 Text Container Color
                 <label class="color"><input 
-                    type="color" value="#151515"
+                    type="color" value="#a01010"
                     name="tbgclr" id="tbgclr"/></label>
             </p>
             <p class="colorprop">
                 Data Container Color
                 <label class="color"><input 
-                    type="color" value="#151515"
+                    type="color" value="#ffffff"
                     name="dbgclr" id="dbgclr"/></label>
             </p>
             <p>
@@ -707,238 +891,6 @@
                 name="logosrc" id="logosrc" />
             <button id="backtomain">Main Settings</button>
         </div>
-        <script defer>try{
-            const ani={
-                duration:.25,
-                ease:"easeInOut",
-            };
-            $(document).on('change', 'input[type=color]', function() {
-                this.parentNode.style.backgroundColor = this.value;
-            });
-            document.getElementById("backtomain").addEventListener("click",(e)=>{
-                e.preventDefault();
-                document.getElementById("editCard").classList.remove("disabled");
-                document.getElementById("advancedEdit").classList.add("disabled");
-                animate(document.getElementById("advancedEdit"),{
-                    x:75,
-                    opacity:0,
-                    scale: .75,
-                },ani);
-                animate(document.getElementById("editCard"),{
-                    x:0,
-                    opacity:1,
-                    scale:1,
-                },ani);
-            });
-            document.getElementById("advanced").addEventListener("click",(e)=>{
-                e.preventDefault();
-                document.getElementById("editCard").classList.add("disabled");
-                document.getElementById("advancedEdit").classList.remove("disabled");
-                animate(document.getElementById("editCard"),{
-                    x:-75,
-                    opacity:0,
-                    scale:.75,
-                },ani);
-                animate(document.getElementById("advancedEdit"),{
-                    x:0,
-                    opacity:1,
-                    scale: 1,
-                },ani);
-            });
-            let card=document.getElementById("card");
-            let ie={
-                name:document.getElementById("name"),
-                idnum:document.getElementById("idnum"),
-                gradyear:document.getElementById("gradyear"),
-                imgsrc:document.getElementById("imgsrc"),
-                logosrc:document.getElementById("logosrc"),
-                bgsrc:document.getElementById("bgsrc"),
-                cbgclr:document.getElementById("cbgclr"),
-                tbgclr:document.getElementById("tbgclr"),
-                dbgclr:document.getElementById("dbgclr"),
-                schoolname:document.getElementById("schoolname"),
-                schoollevel:document.getElementById("schoollevel"),
-            };
-            ie.name.addEventListener("change",()=>{
-                document.getElementById("cardname").innerText=ie.name.value;});
-            ie.name.addEventListener("keydown",(e)=>{
-                if(e.key=="Enter")ie.idnum.focus();});
-            function downloadURI(uri, name) {
-                var link=document.createElement("a");
-                link.download=name;
-                link.href=uri;
-                link.click();
-                //after creating link you should delete dynamic link
-                // clearDynamicLink(link); 
-            }
-            const RenderBarcode=()=>{
-                document.getElementById("barcode").innerText=`*${ie.idnum.value}*`;
-            }
-            ie.idnum.addEventListener("change",()=>{
-                document.getElementById("cardid").innerText=ie.idnum.value;
-                //!doesn't work with html2canvas
-                // document.getElementById("barcode").style.backgroundImage=`url("https://barcode.tec-it.com/barcode.ashx?data=${ie.idnum.value}&code=Code39")`;
-                RenderBarcode();
-            });
-            ie.idnum.addEventListener("keydown",(e)=>{
-                if(e.key=="Enter")ie.gradyear.focus();});
-            ie.schoolname.addEventListener("change",()=>{
-                document.getElementById("logo").setAttribute('data-before',ie.schoolname.value);});
-            ie.schoollevel.addEventListener("change",()=>{
-                document.getElementById("logo").setAttribute('data-after',ie.schoollevel.value);});
-            ie.schoolname.addEventListener("keydown",(e)=>{
-                if(e.key=="Enter")ie.schoollevel.focus();});
-            ie.gradyear.addEventListener("change",()=>{
-                document.getElementById("cardgradyear").innerText=`Class of ${ie.gradyear.value}`;});
-            ie.gradyear.addEventListener("keydown",(e)=>{
-                if(e.key=="Enter"){
-                    ie.imgsrc.click();
-                    e.target.blur();
-                }});
-            ie.imgsrc.addEventListener("change",(e)=>{try{
-                var file=e.target.files[0];
-                var reader=new FileReader();
-                reader.onloadend=()=>
-                    document.getElementById("pfp").style.backgroundImage=`url("${reader.result}")`;
-                if(file)reader.readAsDataURL(file);
-            }catch(e){alert(e);}});
-            ie.logosrc.addEventListener("change",(e)=>{try{
-                var file=e.target.files[0];
-                var reader=new FileReader();
-                reader.onloadend=()=>
-                    document.getElementById("logo").style.backgroundImage=`url("${reader.result}")`;
-                if(file)reader.readAsDataURL(file);
-            }catch(e){alert(e);}});
-            ie.dbgclr.addEventListener("change",()=>{
-                document.getElementById("datacontainer").style.background=ie.dbgclr.value;});
-            ie.tbgclr.addEventListener("change",()=>{
-                document.getElementById("textcontainer").style.background=ie.tbgclr.value;});
-            ie.cbgclr.addEventListener("change",()=>{
-                card.style.background=ie.cbgclr.value;});
-            ie.bgsrc.addEventListener("change",(e)=>{try{
-                var file=e.target.files[0];
-                var reader=new FileReader();
-                reader.onloadend=()=>
-                    card.style.backgroundImage=`url("${reader.result}")`;
-                if(file)reader.readAsDataURL(file);
-            }catch(e){alert(e);}});
-            document.getElementById("export").addEventListener("click",(e)=>{try{
-                e.preventDefault();
-                //!works, but no image support
-                document.getElementById("barcode").classList.remove("previewMode");
-                html2canvas(card,{
-                    allowTaint: true,
-                    useCORS:true,
-                    backgroundColor:null,
-                }).then((canvas)=>{
-                    var myImage=canvas.toDataURL("image/png");
-                    downloadURI("data:"+myImage,"idphoto.png");
-                    document.getElementById("barcode").classList.add("previewMode");
-                });
-                //!works, but translation is broken
-                // domtoimage.toPng(card)
-                    // .then((dataUrl)=>{downloadURI(dataUrl,"idphoto.png");});
-            }catch(e){alert(e);}});
-            const OLD_RenderBarcode=()=>{try{
-                // let bcurl=`https://barcode.tec-it.com/barcode.ashx?data=${ie.idnum.value}&code=Code39`;
-                /*// let bcurl='https://corsproxy.io/'
-                    // +encodeURIComponent(`https://barcode.tec-it.com/barcode.ashx?data=${ie.idnum.value}&code=Code39`);
-                // function imageToDataUri(imgUrl,callback) {
-                    // const img=new Image();
-                    // img.onload=()=>{
-                        // const canvas=document.createElement('canvas');
-                        // const ctx=canvas.getContext('2d');
-                        // canvas.width=img.width;
-                        // canvas.height=img.height;
-                        // ctx.drawImage(img,0,0);
-                        // const dataUri=canvas.toDataURL('image/png');
-                        // callback(dataUri);
-                    // };
-                    // img.onerror=(error)=>{
-                        // callback(null, error);
-                    // }
-                    // img.src=imgUrl;
-                // }
-                // imageToDataUri(bcurl,(res,error)=>{
-                    // if(error)console.error('Error converting image:', error);
-                    // else document.getElementById("barcode").style.backgroundImage=`url("${res}")`;
-                // });*/
-                // let blob=fetch(bcurl,{
-                    // mode:'no-cors',
-                // }).then(r=>r.blob());
-                // let dataUrl=new Promise(resolve=>{
-                    // let reader=new FileReader();
-                    // reader.onload=()=>resolve(reader.result);
-                    // reader.readAsDataURL(blob);
-                // });
-                // dataUrl.then(res=>{
-                // document.getElementById("barcode").style.backgroundImage=`url("${bcurl}")`;
-                // });
-                var charMapper={
-                    "0":["2B", "2W", "2B", "5W", "5B", "2W", "5B", "2W", "2B", "2W"], 
-                    "1":["5B", "2W", "2B", "5W", "2B", "2W", "2B", "2W", "5B", "2W"], 
-                    "2":["2B", "2W", "5B", "5W", "2B", "2W", "2B", "2W", "5B", "2W"], 
-                    "3":["5B", "2W", "5B", "5W", "2B", "2W", "2B", "2W", "2B", "2W"], 
-                    "4":["2B", "2W", "2B", "5W", "5B", "2W", "2B", "2W", "5B", "2W"], 
-                    "5":["5B", "2W", "2B", "5W", "5B", "2W", "2B", "2W", "2B", "2W"], 
-                    "6":["2B", "2W", "5B", "5W", "5B", "2W", "2B", "2W", "2B", "2W"], 
-                    "7":["2B", "2W", "2B", "5W", "2B", "2W", "5B", "2W", "5B", "2W"], 
-                    "8":["5B", "2W", "2B", "5W", "2B", "2W", "5B", "2W", "2B", "2W"], 
-                    "9":["2B", "2W", "5B", "5W", "2B", "2W", "5B", "2W", "2B", "2W"], 
-                    "*":["2B", "5W", "2B", "2W", "5B", "2W", "5B", "2W", "2B", "2W"], 
-                    "A":["5B", "2W", "2B", "2W", "2B", "5W", "2B", "2W", "5B", "2W"], 
-                    "B":["2B", "2W", "5B", "2W", "2B", "5W", "2B", "2W", "5B", "2W"], 
-                    "C":["5B", "2W", "5B", "2W", "2B", "5W", "2B", "2W", "2B", "2W"], 
-                    "D":["2B", "2W", "2B", "2W", "5B", "5W", "2B", "2W", "5B", "2W"], 
-                    "E":["5B", "2W", "2B", "2W", "5B", "5W", "2B", "2W", "2B", "2W"], 
-                    "F":["2B", "2W", "5B", "2W", "5B", "5W", "2B", "2W", "2B", "2W"], 
-                    "G":["2B", "2W", "2B", "2W", "2B", "5W", "5B", "2W", "5B", "2W"], 
-                    "H":["5B", "2W", "2B", "2W", "2B", "5W", "5B", "2W", "2B", "2W"], 
-                    "I":["2B", "2W", "5B", "2W", "2B", "5W", "5B", "2W", "2B", "2W"], 
-                    "J":["2B", "2W", "2B", "2W", "5B", "5W", "5B", "2W", "2B", "2W"], 
-                    "K":["5B", "2W", "2B", "2W", "2B", "2W", "2B", "5W", "5B", "2W"], 
-                    "L":["2B", "2W", "5B", "2W", "2B", "2W", "2B", "5W", "5B", "2W"], 
-                    "M":["5B", "2W", "5B", "2W", "2B", "2W", "2B", "5W", "2B", "2W"], 
-                    "N":["2B", "2W", "2B", "2W", "5B", "2W", "2B", "5W", "5B", "2W"], 
-                    "O":["5B", "2W", "2B", "2W", "5B", "2W", "2B", "5W", "2B", "2W"], 
-                    "P":["2B", "2W", "5B", "2W", "5B", "2W", "2B", "5W", "2B", "2W"], 
-                    "Q":["2B", "2W", "2B", "2W", "2B", "2W", "5B", "5W", "5B", "2W"], 
-                    "R":["5B", "2W", "2B", "2W", "2B", "2W", "5B", "5W", "2B", "2W"], 
-                    "S":["2B", "2W", "5B", "2W", "2B", "2W", "5B", "5W", "2B", "2W"], 
-                    "T":["2B", "2W", "2B", "2W", "5B", "2W", "5B", "5W", "2B", "2W"], 
-                    "U":["5B", "5W", "2B", "2W", "2B", "2W", "2B", "2W", "5B", "2W"], 
-                    "V":["2B", "5W", "5B", "2W", "2B", "2W", "2B", "2W", "5B", "2W"], 
-                    "W":["5B", "5W", "5B", "2W", "2B", "2W", "2B", "2W", "2B", "2W"], 
-                    "X":["2B", "5W", "2B", "2W", "5B", "2W", "2B", "2W", "5B", "2W"], 
-                    "Y":["5B", "5W", "2B", "2W", "5B", "2W", "2B", "2W", "2B", "2W"], 
-                    "Z":["2B", "5W", "5B", "2W", "5B", "2W", "2B", "2W", "2B", "2W"], 
-                    "-":["2B", "5W", "2B", "2W", "2B", "2W", "5B", "2W", "5B", "2W"], 
-                    ",":["5B", "5W", "2B", "2W", "2B", "2W", "5B", "2W", "2B", "2W"],  
-                    "$":["2B", "5W", "2B", "5W", "2B", "5W", "2B", "2W", "2B", "2W"], 
-                    "/":["2B", "5W", "2B", "5W", "2B", "2W", "2B", "5W", "2B", "2W"], 
-                    "+":["2B", "5W", "2B", "2W", "2B", "5W", "2B", "5W", "2B", "2W"], 
-                    "%":["2B", "2W", "2B", "5W", "2B", "5W", "2B", "5W", "2B", "2W"],
-                    "_":["2B", "5W", "5B", "2W", "2B", "2W", "5B", "2W", "2B", "2W"]
-                };
-                var toReplace={
-                    "2B": "▌",
-                    "5B": "█▌",
-                    "2W": "",
-                    "5W": " "
-                };
-                var charMapperObj={};
-                for(var char in charMapper) {
-                    var arr=charMapper[char];
-                    var barcode="";
-                    for(var a in arr) {
-                        var symbol=toReplace[arr[a]];
-                        barcode+=symbol;
-                    }
-                    charMapperObj[char]=barcode.trim();
-                }
-                JSON.stringify(charMapperObj);
-            }catch(e){alert(e);}};
-        }catch(e){alert(e);}</script>
         <!-- <i id="edit" class="fa-solid fa-pen-to-square"></i> -->
         <div id="primarysect">
             <div id="pfp"></div>
@@ -954,6 +906,448 @@
             <span id="cardid" class="ord2">#######</span>
         </div>
     </div>
+    <div id="cardback">
+        <table id="scheduleTable">
+            <tr>
+                <td colspan="6"><strong>Regular Schedule</strong></td>
+            </tr>
+            <tr>
+                <td>BLOCK</td>
+                <td>TIME</td>
+                <td class="tc">A</td>
+                <td class="tc">B</td>
+                <td class="tc">C</td>
+                <td class="tc">D</td>
+            </tr> 
+            <tr>
+                <td>1</td>
+                <td>7:42 - 8:40</td>
+                <td>1</td>
+                <td>4</td>
+                <td>3</td>
+                <td>2</td>
+            </tr> 
+            <tr>
+                <td>2</td>
+                <td>8:45 - 9:40</td>
+                <td>2</td>
+                <td>1</td>
+                <td>4</td>
+                <td>3</td>
+            </tr> 
+            <tr>
+                <td>3</td>
+                <td>9:45 - 10:40</td>
+                <td>3</td>
+                <td>2</td>
+                <td>1</td>
+                <td>4</td>
+            </tr> 
+            <tr>
+                <td>L</td>
+                <td>10:43 - 11:35</td>
+                <td>L</td>
+                <td>L</td>
+                <td>L</td>
+                <td>L</td>
+            </tr> 
+            <tr>
+                <td>4</td>
+                <td>11:40 - 12:35</td>
+                <td>5</td>
+                <td>8</td>
+                <td>7</td>
+                <td>6</td>
+            </tr> 
+            <tr>
+                <td>5</td>
+                <td>12:40 - 1:35</td>
+                <td>6</td>
+                <td>5</td>
+                <td>8</td>
+                <td>7</td>
+            </tr> 
+            <tr>
+                <td>6</td>
+                <td>1:40 - 2:35</td>
+                <td>7</td>
+                <td>6</td>
+                <td>5</td>
+                <td>8</td>
+            </tr> 
+        </table>
+        <table id="customSchedule" class="hidden">
+            <tr>
+                <td colspan="3">DAILY SCHEDULE</td>
+            </tr> 
+            <tr>
+                <td>1</td>
+                <td>7:42 - 8:40</td>
+                <td class="tc">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>8:45 - 9:40</td>
+                <td class="tc">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>9:45 - 10:40</td>
+                <td class="tc">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>10:43 - 11:35</td>
+                <td class="tc">Lunch</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>11:40 - 12:35</td>
+                <td class="tc">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>12:40 - 1:35</td>
+                <td class="tc">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>1:40 - 2:35</td>
+                <td class="tc">CLASS HERE</td>
+            </tr>
+        </table>
+        <span class="margintop bottomText">NJ Suicide Prevention Hopeline: 1-855-654-6735</span>
+        <span class="bottomText">National Suicide Prevention Lifeline (text or talk): 988</span>
+        <span class="bottomText">24-Hour Crisis Support: text HOME to 741741</span>
+        <div id="editCardBack">
+            <h1>Edit Card Back</h1>
+            <select id="cardBackType" value="standard">
+                <option value="standard">Standard</option>
+                <option value="custom">Custom Schedule</option>
+            </select>
+        </div>
+    </div>
+    <script defer>try{
+        const ani={
+            duration:.25,
+            ease:"easeInOut",
+        };
+        let card=document.getElementById("card");
+        const currentlyEditing=document.getElementById("currentlyEditing");
+        let ie={
+            name:document.getElementById("name"),
+            idnum:document.getElementById("idnum"),
+            gradyear:document.getElementById("gradyear"),
+            imgsrc:document.getElementById("imgsrc"),
+            logosrc:document.getElementById("logosrc"),
+            bgsrc:document.getElementById("bgsrc"),
+            cbgclr:document.getElementById("cbgclr"),
+            tbgclr:document.getElementById("tbgclr"),
+            dbgclr:document.getElementById("dbgclr"),
+            schoolname:document.getElementById("schoolname"),
+            schoollevel:document.getElementById("schoollevel"),
+        };
+        $(document).on('change', 'input[type=color]', function() {
+            this.parentNode.style.backgroundColor = this.value;
+        });
+        const cardback=document.getElementById("cardback");
+        const ss=document.getElementById("switchSides");
+        const cb={
+            standard:document.getElementById("scheduleTable"),
+            custom:document.getElementById("customSchedule"),
+        }
+        document.getElementById("cardBackType").addEventListener("change",(e)=>{
+            Object.values(cb).map(item=>{
+                // animate(item,{opacity:0,},ani);
+                item.classList.add("hidden");
+            });
+            // console.log(e.target.value);
+            // animate(cb[e.target.value],{
+                // opacity: 0,
+            // },ani);
+            cb[e.target.value].classList.remove("hidden");
+            e.target.blur();
+            switch(e.target.value){
+                default:console.log("no callback for cardback");
+            }
+        });
+        ss.addEventListener("load",()=>{
+            ss.createAttribute("EditingFront");
+            ss.setAttribute("EditingFront","true");
+        });
+        ss.addEventListener("click",(e)=>{
+            e.preventDefault();
+            ss.setAttribute("EditingFront",
+                ss.getAttribute("EditingFront")=="true"?
+                "false":"true");
+            switch(ss.getAttribute("EditingFront")){
+                case "true":
+                    animate(document.getElementById("cardShadow"),{
+                        opacity:0,
+                    },{...ani,duration:.15});
+                    animate(card,{
+                        y:20,
+                        opacity:0,
+                        scale:.75,
+                        "--blur":"1rem",
+                    },ani);
+                    animate(cardback,{
+                        y:0,
+                        opacity:1,
+                        scale:1,
+                        "--blur":"0rem",
+                    },ani);
+                    setTimeout(()=>{
+                        animate(document.getElementById("cardShadow"),{
+                            opacity:1,
+                        },{...ani,delay:.35,duration:.35});
+                    },100);
+                    currentlyEditing.innerHTML="Back";
+                    cardback.classList.remove("disabled");
+                    card.classList.add("disabled");
+                break;
+                case "false":
+                    animate(document.getElementById("cardShadow"),{
+                        opacity:1,
+                    },{...ani,delay:.35,duration:.35});
+                    animate(card,{
+                        y:0,
+                        opacity:1,
+                        scale:1,
+                        "--blur":"0rem",
+                    },ani);
+                    animate(cardback,{
+                        y:20,
+                        opacity:0,
+                        scale:.75,
+                        "--blur":"1rem",
+                    },ani);
+                    setTimeout(()=>{
+                        animate(document.getElementById("cardShadow"),{
+                            opacity:1,
+                        },{...ani,delay:.35,duration:.35});
+                    },100);
+                    currentlyEditing.innerHTML="Front";
+                    cardback.classList.add("disabled");
+                    card.classList.remove("disabled");
+                break;
+                default:console.error("unknown state");
+            }
+        });
+        document.getElementById("backtomain").addEventListener("click",(e)=>{
+            e.preventDefault();
+            document.getElementById("editCard").classList.remove("disabled");
+            document.getElementById("advancedEdit").classList.add("disabled");
+            animate(document.getElementById("advancedEdit"),{
+                x:75,
+                opacity:0,
+                scale: .75,
+                "--blur":"1rem",
+            },ani);
+            animate(document.getElementById("editCard"),{
+                x:0,
+                opacity:1,
+                scale:1,
+                "--blur":"0rem",
+            },ani);
+        });
+        document.getElementById("advanced").addEventListener("click",(e)=>{
+            e.preventDefault();
+            document.getElementById("editCard").classList.add("disabled");
+            document.getElementById("advancedEdit").classList.remove("disabled");
+            animate(document.getElementById("editCard"),{
+                x:-75,
+                opacity:0,
+                scale:.75,
+                "--blur":"1rem",
+            },ani);
+            animate(document.getElementById("advancedEdit"),{
+                x:0,
+                opacity:1,
+                scale: 1,
+                "--blur":"0rem",
+            },ani);
+        });
+        ie.name.addEventListener("change",()=>{
+            document.getElementById("cardname").innerText=ie.name.value;});
+        ie.name.addEventListener("keydown",(e)=>{
+            if(e.key=="Enter")ie.idnum.focus();});
+        function downloadURI(uri, name) {
+            var link=document.createElement("a");
+            link.download=name;
+            link.href=uri;
+            link.click();
+            //after creating link you should delete dynamic link
+            // clearDynamicLink(link); 
+        }
+        const RenderBarcode=()=>{
+            document.getElementById("barcode").innerText=`*${ie.idnum.value}*`;
+        }
+        ie.idnum.addEventListener("change",()=>{
+            document.getElementById("cardid").innerText=ie.idnum.value;
+            //!doesn't work with html2canvas
+            // document.getElementById("barcode").style.backgroundImage=`url("https://barcode.tec-it.com/barcode.ashx?data=${ie.idnum.value}&code=Code39")`;
+            RenderBarcode();
+        });
+        ie.idnum.addEventListener("keydown",(e)=>{
+            if(e.key=="Enter")ie.gradyear.focus();});
+        ie.schoolname.addEventListener("change",()=>{
+            document.getElementById("logo").setAttribute('data-before',ie.schoolname.value);});
+        ie.schoollevel.addEventListener("change",()=>{
+            document.getElementById("logo").setAttribute('data-after',ie.schoollevel.value);});
+        ie.schoolname.addEventListener("keydown",(e)=>{
+            if(e.key=="Enter")ie.schoollevel.focus();});
+        ie.gradyear.addEventListener("change",()=>{
+            document.getElementById("cardgradyear").innerText=`Class of ${ie.gradyear.value}`;});
+        ie.gradyear.addEventListener("keydown",(e)=>{
+            if(e.key=="Enter"){
+                ie.imgsrc.click();
+                e.target.blur();
+            }});
+        ie.imgsrc.addEventListener("change",(e)=>{try{
+            var file=e.target.files[0];
+            var reader=new FileReader();
+            reader.onloadend=()=>
+                document.getElementById("pfp").style.backgroundImage=`url("${reader.result}")`;
+            if(file)reader.readAsDataURL(file);
+        }catch(e){alert(e);}});
+        ie.logosrc.addEventListener("change",(e)=>{try{
+            var file=e.target.files[0];
+            var reader=new FileReader();
+            reader.onloadend=()=>
+                document.getElementById("logo").style.backgroundImage=`url("${reader.result}")`;
+            if(file)reader.readAsDataURL(file);
+        }catch(e){alert(e);}});
+        ie.dbgclr.addEventListener("change",()=>{
+            document.getElementById("datacontainer").style.background=ie.dbgclr.value;});
+        ie.tbgclr.addEventListener("change",()=>{
+            document.getElementById("textcontainer").style.background=ie.tbgclr.value;});
+        ie.cbgclr.addEventListener("change",()=>{
+            card.style.background=ie.cbgclr.value;});
+        ie.bgsrc.addEventListener("change",(e)=>{try{
+            var file=e.target.files[0];
+            var reader=new FileReader();
+            reader.onloadend=()=>
+                card.style.backgroundImage=`url("${reader.result}")`;
+            if(file)reader.readAsDataURL(file);
+        }catch(e){alert(e);}});
+        document.getElementById("export").addEventListener("click",(e)=>{try{
+            e.preventDefault();
+            //!works, but no image support
+            document.getElementById("barcode").classList.remove("previewMode");
+            html2canvas(card,{
+                allowTaint: true,
+                useCORS:true,
+                backgroundColor:null,
+            }).then((canvas)=>{
+                var myImage=canvas.toDataURL("image/png");
+                downloadURI("data:"+myImage,"idphoto.png");
+                document.getElementById("barcode").classList.add("previewMode");
+            });
+            //!works, but translation is broken
+            // domtoimage.toPng(card)
+                // .then((dataUrl)=>{downloadURI(dataUrl,"idphoto.png");});
+        }catch(e){alert(e);}});
+        const OLD_RenderBarcode=()=>{try{
+            // let bcurl=`https://barcode.tec-it.com/barcode.ashx?data=${ie.idnum.value}&code=Code39`;
+            /*// let bcurl='https://corsproxy.io/'
+                // +encodeURIComponent(`https://barcode.tec-it.com/barcode.ashx?data=${ie.idnum.value}&code=Code39`);
+            // function imageToDataUri(imgUrl,callback) {
+                // const img=new Image();
+                // img.onload=()=>{
+                    // const canvas=document.createElement('canvas');
+                    // const ctx=canvas.getContext('2d');
+                    // canvas.width=img.width;
+                    // canvas.height=img.height;
+                    // ctx.drawImage(img,0,0);
+                    // const dataUri=canvas.toDataURL('image/png');
+                    // callback(dataUri);
+                // };
+                // img.onerror=(error)=>{
+                    // callback(null, error);
+                // }
+                // img.src=imgUrl;
+            // }
+            // imageToDataUri(bcurl,(res,error)=>{
+                // if(error)console.error('Error converting image:', error);
+                // else document.getElementById("barcode").style.backgroundImage=`url("${res}")`;
+            // });*/
+            // let blob=fetch(bcurl,{
+                // mode:'no-cors',
+            // }).then(r=>r.blob());
+            // let dataUrl=new Promise(resolve=>{
+                // let reader=new FileReader();
+                // reader.onload=()=>resolve(reader.result);
+                // reader.readAsDataURL(blob);
+            // });
+            // dataUrl.then(res=>{
+            // document.getElementById("barcode").style.backgroundImage=`url("${bcurl}")`;
+            // });
+            var charMapper={
+                "0":["2B", "2W", "2B", "5W", "5B", "2W", "5B", "2W", "2B", "2W"], 
+                "1":["5B", "2W", "2B", "5W", "2B", "2W", "2B", "2W", "5B", "2W"], 
+                "2":["2B", "2W", "5B", "5W", "2B", "2W", "2B", "2W", "5B", "2W"], 
+                "3":["5B", "2W", "5B", "5W", "2B", "2W", "2B", "2W", "2B", "2W"], 
+                "4":["2B", "2W", "2B", "5W", "5B", "2W", "2B", "2W", "5B", "2W"], 
+                "5":["5B", "2W", "2B", "5W", "5B", "2W", "2B", "2W", "2B", "2W"], 
+                "6":["2B", "2W", "5B", "5W", "5B", "2W", "2B", "2W", "2B", "2W"], 
+                "7":["2B", "2W", "2B", "5W", "2B", "2W", "5B", "2W", "5B", "2W"], 
+                "8":["5B", "2W", "2B", "5W", "2B", "2W", "5B", "2W", "2B", "2W"], 
+                "9":["2B", "2W", "5B", "5W", "2B", "2W", "5B", "2W", "2B", "2W"], 
+                "*":["2B", "5W", "2B", "2W", "5B", "2W", "5B", "2W", "2B", "2W"], 
+                "A":["5B", "2W", "2B", "2W", "2B", "5W", "2B", "2W", "5B", "2W"], 
+                "B":["2B", "2W", "5B", "2W", "2B", "5W", "2B", "2W", "5B", "2W"], 
+                "C":["5B", "2W", "5B", "2W", "2B", "5W", "2B", "2W", "2B", "2W"], 
+                "D":["2B", "2W", "2B", "2W", "5B", "5W", "2B", "2W", "5B", "2W"], 
+                "E":["5B", "2W", "2B", "2W", "5B", "5W", "2B", "2W", "2B", "2W"], 
+                "F":["2B", "2W", "5B", "2W", "5B", "5W", "2B", "2W", "2B", "2W"], 
+                "G":["2B", "2W", "2B", "2W", "2B", "5W", "5B", "2W", "5B", "2W"], 
+                "H":["5B", "2W", "2B", "2W", "2B", "5W", "5B", "2W", "2B", "2W"], 
+                "I":["2B", "2W", "5B", "2W", "2B", "5W", "5B", "2W", "2B", "2W"], 
+                "J":["2B", "2W", "2B", "2W", "5B", "5W", "5B", "2W", "2B", "2W"], 
+                "K":["5B", "2W", "2B", "2W", "2B", "2W", "2B", "5W", "5B", "2W"], 
+                "L":["2B", "2W", "5B", "2W", "2B", "2W", "2B", "5W", "5B", "2W"], 
+                "M":["5B", "2W", "5B", "2W", "2B", "2W", "2B", "5W", "2B", "2W"], 
+                "N":["2B", "2W", "2B", "2W", "5B", "2W", "2B", "5W", "5B", "2W"], 
+                "O":["5B", "2W", "2B", "2W", "5B", "2W", "2B", "5W", "2B", "2W"], 
+                "P":["2B", "2W", "5B", "2W", "5B", "2W", "2B", "5W", "2B", "2W"], 
+                "Q":["2B", "2W", "2B", "2W", "2B", "2W", "5B", "5W", "5B", "2W"], 
+                "R":["5B", "2W", "2B", "2W", "2B", "2W", "5B", "5W", "2B", "2W"], 
+                "S":["2B", "2W", "5B", "2W", "2B", "2W", "5B", "5W", "2B", "2W"], 
+                "T":["2B", "2W", "2B", "2W", "5B", "2W", "5B", "5W", "2B", "2W"], 
+                "U":["5B", "5W", "2B", "2W", "2B", "2W", "2B", "2W", "5B", "2W"], 
+                "V":["2B", "5W", "5B", "2W", "2B", "2W", "2B", "2W", "5B", "2W"], 
+                "W":["5B", "5W", "5B", "2W", "2B", "2W", "2B", "2W", "2B", "2W"], 
+                "X":["2B", "5W", "2B", "2W", "5B", "2W", "2B", "2W", "5B", "2W"], 
+                "Y":["5B", "5W", "2B", "2W", "5B", "2W", "2B", "2W", "2B", "2W"], 
+                "Z":["2B", "5W", "5B", "2W", "5B", "2W", "2B", "2W", "2B", "2W"], 
+                "-":["2B", "5W", "2B", "2W", "2B", "2W", "5B", "2W", "5B", "2W"], 
+                ",":["5B", "5W", "2B", "2W", "2B", "2W", "5B", "2W", "2B", "2W"],  
+                "$":["2B", "5W", "2B", "5W", "2B", "5W", "2B", "2W", "2B", "2W"], 
+                "/":["2B", "5W", "2B", "5W", "2B", "2W", "2B", "5W", "2B", "2W"], 
+                "+":["2B", "5W", "2B", "2W", "2B", "5W", "2B", "5W", "2B", "2W"], 
+                "%":["2B", "2W", "2B", "5W", "2B", "5W", "2B", "5W", "2B", "2W"],
+                "_":["2B", "5W", "5B", "2W", "2B", "2W", "5B", "2W", "2B", "2W"]
+            };
+            var toReplace={
+                "2B": "▌",
+                "5B": "█▌",
+                "2W": "",
+                "5W": " "
+            };
+            var charMapperObj={};
+            for(var char in charMapper) {
+                var arr=charMapper[char];
+                var barcode="";
+                for(var a in arr) {
+                    var symbol=toReplace[arr[a]];
+                    barcode+=symbol;
+                }
+                charMapperObj[char]=barcode.trim();
+            }
+            JSON.stringify(charMapperObj);
+        }catch(e){alert(e);}};
+    }catch(e){alert(e);}</script>
     <style> 
         .bg {
             position: absolute;
@@ -1107,9 +1501,114 @@
                     rgba(255,255,255,0) 70%,
                     rgba(255,255,255,0) 100%);
         }
+        #grain {
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            /* scale: .5; */
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+            svg {
+                height: 100%;
+                width: 100%;
+                &#g1{
+                    opacity: .125;
+                    /* opacity: 0; */
+                    /* filter: blur(.1rem); */
+                    height: 100dvh;
+                    width: 100dvw;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    z-index: 3;
+                }
+            }
+        }
+        #grid {
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            margin: 0;
+            padding: 0;
+            z-index: 2;
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: content-box;
+            background: #353535;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, #50505090 1px, transparent 1px),
+                linear-gradient(to bottom, #50505090 1px, transparent 1px);
+        }
+        #bloom {
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            margin: 0;
+            padding: 0;
+            z-index: 999;
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: content-box;
+            opacity: .25;
+            mix-blend-mode: screen;
+            backdrop-filter: blur(.25rem);
+        }
     </style>
     <div id="lowerShade"></div>
     <div id="sun"></div>
+    <div id="grid"></div>
+    <!-- <div id="bloom"></div> -->
+    <div id="grain">
+        <svg id="g1" xmlns="http://www.w3.org/2000/svg">
+            <filter id="filter">
+                <feTurbulence baseFrequency="0.2"/>
+                <feColorMatrix values="0 0 0 4.75 -2
+                                    0 0 0 4.75 -2
+                                    0 0 0 4.75 -2
+                                    0 0 0 0 1"/>
+            </filter>
+            <rect width="100%" height="100%" filter="url(#filter)"/>
+        </svg>
+        <!-- <svg id="g2" xmlns="http://www.w3.org/2000/svg"> -->
+            <!-- <filter id="filter" seed="99"> -->
+                <!-- <feTurbulence baseFrequency="0.2"/> -->
+                <!-- <feColorMatrix values="0 0 0 4.75 -2 -->
+                                    <!-- 0 0 0 4.75 -2 -->
+                                    <!-- 0 0 0 4.75 -2 -->
+                                    <!-- 0 0 0 0 1"/> -->
+            <!-- </filter> -->
+            <!-- <rect width="100%" height="100%" filter="url(#filter)"/> -->
+        <!-- </svg> -->
+    </div>
     <div id="bg1" class="bg">
         <div
             class="BlurObj"
