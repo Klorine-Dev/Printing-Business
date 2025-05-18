@@ -1,0 +1,9 @@
+/*//!DEPRECATED*/
+@media(orientation:portrait){
+  #card, #cardShadow, #cardBack {
+    scale: 300%;
+    top: 1vmin !important;
+    left: 50% !important;
+    translate: -50% calc(100% + 1vmin) !important; 
+  }
+}

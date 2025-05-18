@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>idgen</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+    <script>const{animate,scroll,stagger}=Motion;</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js" integrity="sha512-01CJ9/g7e8cUmY0DFTMcUw/ikS799FHiOA0eyHsUWfOetgbx/t6oV4otQ5zXKQyIrQGTHSmRVPIgrgLcZi/WMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css" />-->
+    <!--<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>-->
+    <link rel="stylesheet" href="style/global.css">
+    <link rel="stylesheet" href="style/card.css">
+    <link rel="stylesheet" href="style/desktop.css">
+    <!--<link rel="stylesheet" href="style/mobile.css">-->
+</head>
+<body>
+    <div id="info">
+        <h1>IDGen<br><span>V2.9.3</span></h1><hr>
+        <p>To use, simply input your name, ID Number, Graduation year, and possibly an id photo, and it will be generated.<br><br>
+        To print, click the "Export to PNG" button, and put that on a google doc <strong>WITHOUT RESIZING</strong>. The ID is made using the actual dimensions of an ID, and resizing it will make the size innacurate.<br><br>
+        <!-- In order to unblur the barcode and hide the "Preview," please click the export button. The export will be higher quality and remvoe any artifacts, extrams (liek the background), and result in a superior result overall.</p> -->
+    </div>
+    <h1 id="currentlyEditing">Front</h1>
+    <button id="switchSides">Switch Sides</button>
+    <div id="cardShadow"></div>
+    <div id="card">
+        <div id="editCard">
+            <h1>Edit Card</h1>
+            <input 
+                type="text" 
+                placeholder="Name" 
+                name="name" id="name" />
+            <input 
+                type="text" 
+                placeholder="ID Number" 
+                name="idnum" id="idnum" />
+            <input 
+                type="text" 
+                placeholder="Graduation Year" 
+                name="gradyear" id="gradyear" />
+            <label for="imgsrc" class="fileUpload">
+                Upload ID Photo</label>
+            <input 
+                type="file" accept="image"
+                name="imgsrc" id="imgsrc" />
+            <button id="export">Export to PNG</button>
+            <button id="advanced">Advanced Settings</button>
+        </div>
+        <div id="advancedEdit" class="disabled">
+            <h1>Advanced</h1>
+            <input 
+                type="text" 
+                placeholder="School Name"
+                name="schoolname" id="schoolname" />
+            <input 
+                type="text" 
+                placeholder="School Level"
+                name="schoollevel" id="schoollevel" />
+            <select id="theme" value="default">
+                <option value="default">Default</option>
+                <option value="light">Light</option>
+                <option value="customcss">Use Custom CSS File</option>
+            </select>
+            <p class="colorprop">
+                Text Container Color
+                <label class="color"><input 
+                    type="color" value="#a01010"
+                    name="tbgclr" id="tbgclr"/></label>
+            </p>
+            <p class="colorprop">
+                Data Container Color
+                <label class="color"><input 
+                    type="color" value="#ffffff"
+                    name="dbgclr" id="dbgclr"/></label>
+            </p>
+            <p>
+                <label for="bgsrc" class="fileUpload">
+                    Upload Background Photo</label>
+                <input 
+                    type="file" accept="image"
+                    name="bgsrc" id="bgsrc" />
+                Or<label class="color"><input 
+                    type="color" value="#151515"
+                    name="cbgclr" id="cbgclr"/></label>
+            </p>
+            <label for="logosrc" class="fileUpload">
+                Upload Logo Photo</label>
+            <input 
+                type="file" accept="image" 
+                name="logosrc" id="logosrc" />
+            <button id="backtomain">Main Settings</button>
+        </div>
+        <!-- <i id="edit" class="fa-solid fa-pen-to-square"></i> -->
+        <div id="primarysect">
+            <div id="pfp"></div>
+            <div id="logo" data-before="WEST ESSEX" data-after="HIGH SCHOOL"></div>
+        </div>
+        <div id="textcontainer">
+            <span id="cardname" class="ord1">NAME HERE</span>
+            <span id="cardgradyear" class="ord2">Class of ####</span>
+            <span class="ord3"></span>
+        </div>
+        <div id="datacontainer">
+            <div id="barcode" class="previewMode">*0000000*</div>
+            <span id="cardid" class="ord2">#######</span>
+        </div>
+    </div>
+    <div id="cardback">
+        <table id="scheduleTable">
+            <tr>
+                <td colspan="6"><strong>Regular Schedule</strong></td>
+            </tr>
+            <tr>
+                <td>BLOCK</td>
+                <td>TIME</td>
+                <td class="tc">A</td>
+                <td class="tc">B</td>
+                <td class="tc">C</td>
+                <td class="tc">D</td>
+            </tr> 
+            <tr>
+                <td>1</td>
+                <td>7:42 - 8:40</td>
+                <td>1</td>
+                <td>4</td>
+                <td>3</td>
+                <td>2</td>
+            </tr> 
+            <tr>
+                <td>2</td>
+                <td>8:45 - 9:40</td>
+                <td>2</td>
+                <td>1</td>
+                <td>4</td>
+                <td>3</td>
+            </tr> 
+            <tr>
+                <td>3</td>
+                <td>9:45 - 10:40</td>
+                <td>3</td>
+                <td>2</td>
+                <td>1</td>
+                <td>4</td>
+            </tr> 
+            <tr>
+                <td>L</td>
+                <td>10:43 - 11:35</td>
+                <td>L</td>
+                <td>L</td>
+                <td>L</td>
+                <td>L</td>
+            </tr> 
+            <tr>
+                <td>4</td>
+                <td>11:40 - 12:35</td>
+                <td>5</td>
+                <td>8</td>
+                <td>7</td>
+                <td>6</td>
+            </tr> 
+            <tr>
+                <td>5</td>
+                <td>12:40 - 1:35</td>
+                <td>6</td>
+                <td>5</td>
+                <td>8</td>
+                <td>7</td>
+            </tr> 
+            <tr>
+                <td>6</td>
+                <td>1:40 - 2:35</td>
+                <td>7</td>
+                <td>6</td>
+                <td>5</td>
+                <td>8</td>
+            </tr> 
+        </table>
+        <table id="customSchedule" class="hidden">
+            <tr>
+                <td colspan="3">DAILY SCHEDULE</td>
+            </tr> 
+            <tr>
+                <td>1</td>
+                <td class="tc" id="classp1">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td class="tc" id="classp2">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td class="tc" id="classp3">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td class="tc" id="classp4">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td class="tc">Lunch</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td class="tc" id="classp5">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td class="tc" id="classp6">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td class="tc" id="classp7">CLASS HERE</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td class="tc" id="classp8">CLASS HERE</td>
+            </tr>
+        </table>
+        <span class="margintop bottomText">NJ Suicide Prevention Hopeline: 1-855-654-6735</span>
+        <span class="bottomText">National Suicide Prevention Lifeline (text or talk): 988</span>
+        <span class="bottomText">24-Hour Crisis Support: text HOME to 741741</span>
+        <div id="editCardBack">
+            <h1>Edit Card Back</h1>
+            <select id="cardBackType" value="standard">
+                <option value="standard">Standard</option>
+                <option value="custom">Custom Schedule</option>
+            </select>
+            <div id="customEdit" class="hidden">
+                <input 
+                    type="text"
+                    placeholder="Period 1 Class Name"
+                    id="ce_p1edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp1').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p2edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 2 Class Name"
+                    id="ce_p2edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp2').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p3edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 3 Class Name"
+                    id="ce_p3edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp3').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p4edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 4 Class Name"
+                    id="ce_p4edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp4').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p5edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 5 Class Name"
+                    id="ce_p5edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp5').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p6edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 6 Class Name"
+                    id="ce_p6edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp6').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p7edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 7 Class Name"
+                    id="ce_p7edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp7').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            document.getElementById('ce_p8edit').focus();
+                    })(event);"/>
+                <input 
+                    type="text"
+                    placeholder="Period 8 Class Name"
+                    id="ce_p8edit"
+                    onkeyup="((e)=>{
+                        document.getElementById('classp8').innerText=e.target.value;
+                    })(event);"
+                    onkeydown="((e)=>{
+                        if(e.key==='Enter')
+                            e.target.blur();
+                    })(event);"/>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js" defer></script>
+    <div id="lowerShade"></div>
+    <div id="sun"></div>
+    <div id="grid"></div>
+    <!-- <div id="bloom"></div> -->
+    <div id="grain">
+        <svg id="g1" xmlns="http://www.w3.org/2000/svg">
+            <filter id="filter">
+                <feTurbulence baseFrequency="0.2"/>
+                <feColorMatrix values="0 0 0 4.75 -2
+                                    0 0 0 4.75 -2
+                                    0 0 0 4.75 -2
+                                    0 0 0 0 1"/>
+            </filter>
+            <rect width="100%" height="100%" filter="url(#filter)"/>
+        </svg>
+        <!-- <svg id="g2" xmlns="http://www.w3.org/2000/svg"> -->
+            <!-- <filter id="filter" seed="99"> -->
+                <!-- <feTurbulence baseFrequency="0.2"/> -->
+                <!-- <feColorMatrix values="0 0 0 4.75 -2 -->
+                                    <!-- 0 0 0 4.75 -2 -->
+                                    <!-- 0 0 0 4.75 -2 -->
+                                    <!-- 0 0 0 0 1"/> -->
+            <!-- </filter> -->
+            <!-- <rect width="100%" height="100%" filter="url(#filter)"/> -->
+        <!-- </svg> -->
+    </div>
+    <div id="bg1" class="bg">
+        <div
+            class="BlurObj"
+            id="i1"></div>
+        <div
+            class="BlurObj"
+            id="i2"></div>
+        <div
+            class="BlurObj"
+            id="i3"></div>
+        <div
+            class="BlurObj"
+            id="i4"></div>
+    </div>
+    <div id="bg2" class="bg">
+        <div
+            class="BlurObj"
+            id="i1"></div>
+        <div
+            class="BlurObj"
+            id="i2"></div>
+        <div
+            class="BlurObj"
+            id="i3"></div>
+        <div
+            class="BlurObj"
+            id="i4"></div>
+    </div>
+    <div id="bg3" class="bg">
+        <div
+            class="BlurObj"
+            id="i1"></div>
+        <div
+            class="BlurObj"
+            id="i2"></div>
+        <div
+            class="BlurObj"
+            id="i3"></div>
+        <div
+            class="BlurObj"
+            id="i4"></div>
+    </div>
+    <div id="bg4" class="bg">
+        <div
+            class="BlurObj"
+            id="i1"></div>
+        <div
+            class="BlurObj"
+            id="i2"></div>
+        <div
+            class="BlurObj"
+            id="i3"></div>
+        <div
+            class="BlurObj"
+            id="i4"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "packageManager": "yarn@4.9.1",
+  "dependencies": {
+    "inliner": "^1.13.1"
+  }
+}

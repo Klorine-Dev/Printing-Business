@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap');
+body {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    translate: -50% -50%;
+    height: 100dvh;
+    width: 100dvw;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: content-box;
+}
+*{
+    user-select: none;
+}
+.disabled {
+    pointer-events: none;
+}
+.hidden {
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+    height: 0 !important;
+}
+.bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100dvw;
+    height: 100dvh;
+    z-index: 2;
+    /* opacity: .25; */
+    &#bg1{
+        transform: translate(-50%,-50%);
+        animation: 
+            sizechange 40s ease-in-out infinite,
+            shiftfx 45s ease-in-out infinite,
+            scalechange 35s ease-in-out infinite,
+            rotationchange 30s ease-in-out infinite;
+    }
+    &#bg2{
+        transform: translate(-60%,-40%);
+        animation: 
+            sizechange 60s ease-in-out infinite,
+            shiftfx 45s ease-in-out infinite,
+            scalechange 45s ease-in-out infinite, 
+            rotationchange 45s ease-in-out infinite;
+    }
+    &#bg3{
+        transform: translate(-40%,-60%);
+        animation: 
+            sizechange 30s ease-in-out infinite,
+            shiftfx 45s ease-in-out infinite,
+            scalechange 30s ease-in-out infinite,
+            rotationchange 45s ease-in-out infinite;
+    }
+    &#bg4{
+        transform: translate(-50%,-50%);
+        animation: 
+            sizechange 60s ease-in-out infinite,
+            shiftfx 30s ease-in-out infinite,
+            scalechange 60s ease-in-out infinite,
+            rotationchange 45s ease-in-out infinite;
+    }
+    .BlurObj {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 3rem;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        filter: blur(5rem);
+        pointer-events: none;
+        /* backdrop-filter: blur(.5rem); */
+        &#i1{
+            background: #5900ff50;
+            height: 15rem;
+            top: 25%;
+            left: 40%;
+            animation: 
+                shiftfx 25s ease-in-out infinite,
+                scalechange 35s ease-in-out infinite;
+        }
+        &#i2{
+            background: #0f73ff50;
+            height: 10rem;
+            top: 55%;
+            left: 25%;
+            animation: 
+                shiftfx 20s ease-in-out infinite,
+                scalechange 10s ease-in-out infinite;
+        }
+        &#i3{
+            background: #a30fff50;
+            height: 8rem;
+            top: 55%;
+            left: 40%;
+            animation: 
+                shiftfx 15s ease-in-out infinite,
+                scalechange 20s ease-in-out infinite;
+        }
+        &#i4{
+            background: #0f6bff50;
+            height: 12rem;
+            top: 40%;
+            left: 65%;
+            animation: 
+                shiftfx 40s ease-in-out infinite,
+                scalechange 20s ease-in-out infinite;
+        }
+    }
+}
+@keyframes sizechange {
+    0%{height: 80%;width: 100%;}
+    25%{height: 100%;width: 90%;}
+    50%{height: 90%;width: 120%;}
+    75%{height: 50%;width: 70%;}
+    100%{height: 80%;width: 100%;}
+}
+@keyframes rotationchange {
+    0%{rotate: 5deg;}
+    25%{rotate: -10deg;}
+    50%{rotate: 15deg;}
+    75%{rotate: -5deg;}
+    100%{rotate: 5deg;}
+}
+@keyframes scalechange {
+    0%{scale: 100%;}
+    25%{scale: 95%;}
+    50%{scale: 110%;}
+    75%{scale: 90%;}
+    100%{scale: 100%;}
+}
+@keyframes shiftfx {
+    0%{translate: 0% 0%;}
+    20%{translate: -10% -10%;}
+    40%{translate: 5% 10%;}
+    60%{translate: -15% 5%;}
+    80%{translate: 5% -10%;}
+    100%{translate: 0% 0%;}
+}
+#lowerShade {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+    background: linear-gradient(0deg,#15151515,transparent);
+    user-select: none;
+    pointer-events: none;
+}
+#sun {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    margin: 0;
+    padding: 0;
+    z-index: 120;
+    filter: blur(.05rem);
+    user-select: none;
+    pointer-events: none;
+    background: 
+        radial-gradient(
+            circle at 20px 20px,
+            rgba(255,255,255,.05) 0%, 
+            rgba(255,255,255,.025) 30%,
+            rgba(255,255,255,0) 70%,
+            rgba(255,255,255,0) 100%);
+}
+#grain {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* scale: .5; */
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mix-blend-mode: screen;
+    svg {
+        height: 100%;
+        width: 100%;
+        &#g1{
+            opacity: .125;
+            /* opacity: 0; */
+            /* filter: blur(.1rem); */
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 3;
+        }
+    }
+}
+#grid {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mix-blend-mode: screen;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: content-box;
+    background: #353535;
+    background-size: 40px 40px;
+    background-image:
+        linear-gradient(to right, #50505090 1px, transparent 1px),
+        linear-gradient(to bottom, #50505090 1px, transparent 1px);
+}
+#bloom {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0;
+    padding: 0;
+    z-index: 999;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mix-blend-mode: screen;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: content-box;
+    opacity: .25;
+    mix-blend-mode: screen;
+    backdrop-filter: blur(.25rem);
+}
