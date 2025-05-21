@@ -17,11 +17,12 @@
     <link rel="stylesheet" href="style/global.css">
     <link rel="stylesheet" href="style/card.css">
     <link rel="stylesheet" href="style/desktop.css">
+    <link rel="stylesheet" href="themes/themes.css">
     <!--<link rel="stylesheet" href="style/mobile.css">-->
 </head>
 <body>
     <div id="info">
-        <h1>IDGen<br><span>V2.9.3</span></h1><hr>
+        <h1>IDGen<br><span>V2.10.1</span></h1><hr>
         <p>To use, simply input your name, ID Number, Graduation year, and possibly an id photo, and it will be generated.<br><br>
         To print, click the "Export to PNG" button, and put that on a google doc <strong>WITHOUT RESIZING</strong>. The ID is made using the actual dimensions of an ID, and resizing it will make the size innacurate.<br><br>
         <!-- In order to unblur the barcode and hide the "Preview," please click the export button. The export will be higher quality and remvoe any artifacts, extrams (liek the background), and result in a superior result overall.</p> -->
@@ -51,6 +52,10 @@
                 name="imgsrc" id="imgsrc" />
             <button id="export">Export to PNG</button>
             <button id="advanced">Advanced Settings</button>
+            <button id="reset" onclick="((e)=>{
+                e.preventDefault();
+                location.reload();
+            })(event)">Reset</button>
         </div>
         <div id="advancedEdit" class="disabled">
             <h1>Advanced</h1>
@@ -64,9 +69,20 @@
                 name="schoollevel" id="schoollevel" />
             <select id="theme" value="default">
                 <option value="default">Default</option>
+                <option value="dark">Dark</option>
                 <option value="light">Light</option>
+                <option value="customhue">Custom Accent</option>
                 <option value="customcss">Use Custom CSS File</option>
             </select>
+            <div id="editHue" class="hidden">
+                <label for="hueSlider">Edit hue</label>
+                <input 
+                    type="range" 
+                    min="0"
+                    max="720"
+                    value="0"
+                    id="hueSlider"/>
+            </div>
             <p class="colorprop">
                 Text Container Color
                 <label class="color"><input 
@@ -321,6 +337,13 @@
                             e.target.blur();
                     })(event);"/>
             </div>
+            <label for="includeNumbersCB" id="incbWrapper">
+                Include Phone Numbers?&nbsp;
+                <input
+                    checked
+                    type="checkbox"
+                    id="includeNumbersCB">
+            </label>
         </div>
     </div>
     <script src="./script.js" defer></script>

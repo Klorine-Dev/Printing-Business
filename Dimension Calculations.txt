@@ -1,0 +1,12 @@
+DIMENSIONS:
+Card Dimensions: 2.25" x 3.5";
+A4 Paper Dimensions: 8.27" x 11.69";
+Letter Paper Dimensions: 8.5" x 11";
+
+PORTRAIT PRINTING:
+11.69/2.25=~5
+8.27/3.5=~2
+
+LANDSCAPE PRINTING:
+8.27/2.25=~3
+11.69/3.5=~3

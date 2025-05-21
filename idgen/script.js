@@ -58,9 +58,25 @@ ss.addEventListener("load",()=>{
   ss.createAttribute("EditingFront");
   ss.setAttribute("EditingFront","true");
 });
+document.getElementById("hueSlider").addEventListener("mousemove",(e)=>{
+  document.getElementById("textcontainer").style.filter=`hue-rotate(${e.target.value}deg)`;
+  document.getElementById("logo").style.filter=`hue-rotate(${e.target.value}deg)`;
+});
+const defaultCallback=()=>{
+  document.getElementById("textcontainer").style.filter=`hue-rotate(0deg)`;
+  document.getElementById("logo").style.filter=`hue-rotate(0deg)`;
+  document.getElementById("editHue").classList.add("hidden");
+};
+document.getElementById("includeNumbersCB").addEventListener("change",(e)=>{
+  [...document.getElementsByClassName("bottomText")]
+    .map(i=>i.classList[!e.target.checked?"add":"remove"]("hidden"));
+});
 document.getElementById("theme").addEventListener("change",(e)=>{try{
   card.className=e.target.value;
   switch(e.target.value){
+    case "customhue":
+      document.getElementById("editHue").classList.remove("hidden");
+    break;
     case "customcss":
       let fi=document.createElement("input");
       fi.setAttribute("type","file");
@@ -90,7 +106,7 @@ document.getElementById("theme").addEventListener("change",(e)=>{try{
       });
       fi.click();
     break;
-    default:
+    default:defaultCallback();
       // alert("no callback for theme");
   }
   e.target.blur();
