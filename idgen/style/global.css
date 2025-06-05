@@ -152,6 +152,9 @@ body {
     padding: 0;
     z-index: 3;
     background: linear-gradient(0deg,#15151515,transparent);
+    &.ls {
+        background: linear-gradient(0deg,#15151590,transparent) !important;
+    }
     user-select: none;
     pointer-events: none;
 }

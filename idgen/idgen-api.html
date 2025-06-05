@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>idgen api</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+    <script>const{animate,scroll,stagger}=Motion;</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js" integrity="sha512-01CJ9/g7e8cUmY0DFTMcUw/ikS799FHiOA0eyHsUWfOetgbx/t6oV4otQ5zXKQyIrQGTHSmRVPIgrgLcZi/WMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css" />-->
+    <!--<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>-->
+    <link rel="stylesheet" href="style/global.css">
+    <link rel="stylesheet" href="style/card.css">
+    <!-- <link rel="stylesheet" href="style/desktop.css"> -->
+    <link rel="stylesheet" href="themes/themes.css">
+    <!--<link rel="stylesheet" href="style/mobile.css">-->
+</head>
+<body>
+    <div id="card">
+        <div id="primarysect">
+            <div id="pfp"></div>
+            <div id="logo" data-before="WEST ESSEX" data-after="HIGH SCHOOL"></div>
+        </div>
+        <div id="textcontainer">
+            <span id="cardname" class="ord1">NAME HERE</span>
+            <span id="cardgradyear" class="ord2">Class of ####</span>
+            <span class="ord3"></span>
+        </div>
+        <div id="datacontainer">
+            <div id="barcode" class="previewMode">*0000000*</div>
+            <span id="cardid" class="ord2">#######</span>
+        </div>
+    </div>
+    <style>    
+        #closeWin {
+            background: #151515;
+            /* backdrop-filter: blur(1rem); */
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            z-index: 189;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 2rem;
+            color: #ffffff;
+            font-family: "Poppins", sans-serif;
+            padding: 2rem;
+            display: flex;
+        }
+        #lowerShade {
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            margin: 0;
+            padding: 0;
+            z-index: 203;
+            background: linear-gradient(0deg,#15151515,transparent);
+            &.ls {
+                background: linear-gradient(0deg,#15151590,transparent) !important;
+            }
+            user-select: none;
+            pointer-events: none;
+        }
+        #grain {
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            /* scale: .5; */
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+            svg {
+                height: 100%;
+                width: 100%;
+                &#g1{
+                    opacity: .125;
+                    /* opacity: 0; */
+                    /* filter: blur(.1rem); */
+                    height: 100dvh;
+                    width: 100dvw;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    z-index: 204;
+                }
+            }
+        }
+        #grid {
+            height: 100dvh;
+            width: 100dvw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            margin: 0;
+            padding: 0;
+            z-index: 202;
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: content-box;
+            background: #353535;
+            background-size: 5vmin 5vmin;
+            background-image:
+                linear-gradient(to right, #50505090 1px, transparent 1px),
+                linear-gradient(to bottom, #50505090 1px, transparent 1px);
+        }
+    </style>
+    <div id="closeWin">
+        <h1>You can now close this tab</h1>
+        <!-- <div id="grid" class="ls"></div> -->
+        <div id="lowerShade" class="ls"></div>
+        <!-- <div id="grain" class="ls"> -->
+            <!-- <svg id="g1" xmlns="http://www.w3.org/2000/svg"> -->
+                <!-- <filter id="filter"> -->
+                    <!-- <feTurbulence baseFrequency="0.2"/> -->
+                    <!-- <feColorMatrix values="0 0 0 4.75 -2 -->
+                                        <!-- 0 0 0 4.75 -2 -->
+                                        <!-- 0 0 0 4.75 -2 -->
+                                        <!-- 0 0 0 0 1"/> -->
+                <!-- </filter> -->
+                <!-- <rect width="100%" height="100%" filter="url(#filter)"/> -->
+            <!-- </svg> -->
+        <!-- </div> -->
+    </div>
+    <script defer>try{
+        const url=new URLSearchParams(window.location.search);
+        const card=document.getElementById("card");
+        function downloadURI(uri, name) {
+            var link=document.createElement("a");
+            link.download=name;
+            link.href=uri;
+            link.click();
+            //after creating link you should delete dynamic link
+            // clearDynamicLink(link); 
+        }
+        // alert();
+        url.forEach((value,key)=>{
+            // alert(`${key}: ${value}`);
+            switch(key){
+                case"n":document.getElementById("cardname").innerText=value;break;
+                case"i":
+                    document.getElementById("barcode").innerText=value;
+                    document.getElementById("cardid").innerText=value;
+                break;
+                case "fc":
+                    if(localStorage.getItem("idgenData")==null) alert("error: no cookie is present");
+                    else {
+                        let igd=JSON.parse(localStorage.getItem("idgenData"));
+                        document.getElementById("cardname").innerText=igd.name;
+                        document.getElementById("cardgradyear").innerText=`Class of ${igd.gradyear}`;
+                        document.getElementById("barcode").innerText=igd.idnum;
+                        document.getElementById("cardid").innerText=igd.idnum;
+                        document.getElementById("pfp").style.backgroundImage=`url("${igd.imgsrc}")`;
+                    }
+                break;
+                case "qx":
+                    html2canvas(card,{
+                        allowTaint: true,
+                        useCORS:true,
+                        backgroundColor:null,
+                    }).then((canvas)=>{
+                        var myImage=canvas.toDataURL("image/png");
+                        downloadURI("data:"+myImage,"idphoto.png");
+                        // document.getElementById("closeWin").style.display="flex !important";
+                        // open(location, '_self').close();
+                    });    
+                break;
+                case"g":document.getElementById("cardgradyear").innerText=`Class of ${value}`;break;
+                default:alert(`unknown key: ${key} (value: ${value})`);
+            }
+        });
+    }catch(e){alert(e)}</script>
+</body>
+</html>

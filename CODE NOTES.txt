@@ -1,0 +1,8 @@
+IMPORTANT !! For V4
+New Code Draft
+
+Api
+- Specifically an html file separate of idgen that takes url parameters and just has a to-scale version of ids. Why? Because scaling would change the id export size and make it innacurate. Itd be better to have a "preview" on idgen.html, and have the api actually export it
+
+Mobile
+- Specifically to use the api, scaling will be handled by the app, and the export will be handled by the api. Idea is to make it as responsive as possible for mobile devices

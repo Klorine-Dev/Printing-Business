@@ -292,5 +292,34 @@ document.getElementById("export").addEventListener("click",(e)=>{try{
   // domtoimage.toPng(card)
     // .then((dataUrl)=>{downloadURI(dataUrl,"idphoto.png");});
 }catch(e){alert(e);}});
+document.getElementById("exportback").addEventListener("click",(e)=>{try{
+  e.preventDefault();
+  //!works, but no image support
+  // document.getElementById("barcode").classList.remove("previewMode");
+  html2canvas(cardback,{
+    allowTaint: true,
+    useCORS:true,
+    backgroundColor:null,
+  }).then((canvas)=>{
+    var myImage=canvas.toDataURL("image/png");
+    downloadURI("data:"+myImage,"idback.png");
+    // document.getElementById("barcode").classList.add("previewMode");
+  });
+}catch(e){alert(e);}});
+window.addEventListener("load",(e)=>{
+  let ls=document.getElementById("loadingScreen");
+  setTimeout(()=>{animate(ls,{opacity:0,},ani);},1000);
+  ls.classList.add("disabled");
+});
+document.getElementById("sendviacookie").addEventListener("click",(e)=>{
+  localStorage.setItem("idgenData",JSON.stringify({
+    name:ie.name.value,
+    idnum:ie.idnum.value,
+    gradyear:ie.gradyear.value,
+    imgsrc:document.getElementById("pfp").style.backgroundImage
+      .replace(`url("`,"")
+      .replace(`")`,""),
+  }));
+});
 //-----------------
 }catch(e){alert(e);}

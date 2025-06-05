@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>idgen</title>
+    <title>IDGen</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
@@ -21,8 +20,25 @@
     <!--<link rel="stylesheet" href="style/mobile.css">-->
 </head>
 <body>
+    <div id="loadingScreen">
+        <h1>IDGen</h1>
+        <div id="grid" class="ls"></div>
+        <div id="lowerShade" class="ls"></div>
+        <div id="grain" class="ls">
+            <svg id="g1" xmlns="http://www.w3.org/2000/svg">
+                <filter id="filter">
+                    <feTurbulence baseFrequency="0.2"/>
+                    <feColorMatrix values="0 0 0 4.75 -2
+                                        0 0 0 4.75 -2
+                                        0 0 0 4.75 -2
+                                        0 0 0 0 1"/>
+                </filter>
+                <rect width="100%" height="100%" filter="url(#filter)"/>
+            </svg>
+        </div>
+    </div>
     <div id="info">
-        <h1>IDGen<br><span>V2.10.1</span></h1><hr>
+        <h1>IDGen<br><span>V4.0.1</span></h1><hr>
         <p>To use, simply input your name, ID Number, Graduation year, and possibly an id photo, and it will be generated.<br><br>
         To print, click the "Export to PNG" button, and put that on a google doc <strong>WITHOUT RESIZING</strong>. The ID is made using the actual dimensions of an ID, and resizing it will make the size innacurate.<br><br>
         <!-- In order to unblur the barcode and hide the "Preview," please click the export button. The export will be higher quality and remvoe any artifacts, extrams (liek the background), and result in a superior result overall.</p> -->
@@ -51,6 +67,7 @@
                 type="file" accept="image"
                 name="imgsrc" id="imgsrc" />
             <button id="export">Export to PNG</button>
+            <button id="sendviacookie">Send to API (Via Cookie)</button>
             <button id="advanced">Advanced Settings</button>
             <button id="reset" onclick="((e)=>{
                 e.preventDefault();
@@ -344,6 +361,11 @@
                     type="checkbox"
                     id="includeNumbersCB">
             </label>
+            <button id="exportback">Export to PNG</button>
+            <button id="resetback" onclick="((e)=>{
+                e.preventDefault();
+                location.reload();
+            })(event)">Reset</button>
         </div>
     </div>
     <script src="./script.js" defer></script>
